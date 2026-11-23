@@ -1,0 +1,13 @@
+{
+  "appId": "com.aminepara.app",
+  "appName": "Amine Para",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}
