@@ -1,0 +1,37 @@
+{
+  "name": "amine-para",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Amine Para - تطبيق أندرويد تجاري للبارافارماسي (Offline-first)",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "capacitor:sync:before": "node hooks.mjs before",
+    "capacitor:sync:after": "node hooks.mjs after"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/app": "^6.0.2",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/filesystem": "^6.0.2",
+    "@capacitor/local-notifications": "^6.1.2",
+    "@capacitor/share": "^6.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  },
+  "optionalDependencies": {
+    "@fontsource/cairo": "*",
+    "@fontsource/tajawal": "*",
+    "@fontsource/almarai": "*",
+    "@fontsource/ibm-plex-sans-arabic": "*",
+    "@fontsource/amiri": "*",
+    "@fontsource/reem-kufi": "*",
+    "@fontsource/lalezar": "*",
+    "@fontsource/aref-ruqaa": "*",
+    "@fontsource/playfair-display": "*",
+    "@fontsource/montserrat": "*",
+    "@fontsource/dancing-script": "*",
+    "@fontsource/noto-sans-arabic": "*"
+  }
+}
