@@ -308,3 +308,14 @@ input[type=range] { width: 100%; accent-color: var(--brand); }
 .ed .photo-grid { color: #1A2A12; }
 
 .dim-row { display: flex; align-items: center; gap: 8px; } .dim-row input { flex: 1; min-width: 0; background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); border-radius: 10px; padding: 9px; font-size: 16px; text-align: center; font-family: inherit; } .dim-row b { color: rgba(255,255,255,.7); }
+
+/* ===== شاشة القفل ===== */
+#lock { position: fixed; inset: 0; z-index: 1000; background: linear-gradient(160deg, #14284F, #1E3D76 60%, #2d5a1f); overflow-y: auto; display: grid; place-items: center; padding: 24px 16px calc(24px + env(safe-area-inset-bottom)); }
+.lock-card { width: min(440px, 100%); background: var(--surface, #fff); color: var(--ink, #14284F); border-radius: 26px; padding: 22px 20px; box-shadow: 0 20px 60px rgba(0,0,0,.4); text-align: center; display: grid; gap: 12px; }
+.lock-logo { width: 96px; height: 96px; margin: 0 auto; border-radius: 50%; }
+.lock-card h1 { margin: 0; font-size: 22px; } .lock-card p { margin: 0; color: var(--ink-2, #4a5a73); line-height: 1.7; font-size: 14.5px; }
+.lock-code { font: 800 28px/1.2 ui-monospace, Menlo, monospace; letter-spacing: 2px; background: #EEF5E3; color: #1E3D76; padding: 14px; border-radius: 16px; user-select: all; }
+.lock-row { display: flex; gap: 8px; } .lock-row .btn { flex: 1; justify-content: center; }
+.lock-card textarea, .lock-card input { width: 100%; font-family: ui-monospace, Menlo, monospace; font-size: 15px; }
+.lock-err { color: #C62F4B !important; font-weight: 700; }
+.lock-link { border: 0; background: transparent; color: #1E3D76; font-weight: 700; padding: 10px; cursor: pointer; text-decoration: underline; font-family: inherit; font-size: 14px; }
