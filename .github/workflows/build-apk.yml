@@ -14,6 +14,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Pick newest uploaded files
+        run: |
+          for spec in app:js app:css hooks:mjs package:json index:html; do
+            base="${spec%%:*}"; ext="${spec##*:}"
+            best=""; bt=0
+            for f in "$base.$ext" "$base ("*")"."$ext"; do
+              [ -f "$f" ] || continue
+              ts=$(git log -1 --format=%ct -- "$f")
+              if [ -n "$ts" ] && [ "$ts" -ge "$bt" ]; then best="$f"; bt="$ts"; fi
+            done
+            echo "$base.$ext <- $best"
+            if [ -n "$best" ] && [ "$best" != "$base.$ext" ]; then cp "$best" "/tmp/pick.$ext" && cp "/tmp/pick.$ext" "$base.$ext"; fi
+          done
 
       - uses: actions/setup-node@v4
         with:
@@ -33,6 +49,19 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
+      - name: Fix signing key
+        run: |
+          python3 - <<'PY'
+          import re
+          p = 'android/app/build.gradle'
+          s = open(p).read()
+          blk = "\n    signingConfigs {\n        debug {\n            storeFile rootProject.file('../debug.keystore')\n            storePassword 'android'\n            keyAlias 'androiddebugkey'\n            keyPassword 'android'\n        }\n    }\n"
+          s2 = re.sub(r'(\nandroid \{\n)', lambda m: m.group(1) + blk.lstrip('\n'), s, count=1)
+          assert s2 != s, 'android block not found'
+          open(p, 'w').write(s2)
+          PY
+          grep -n "storeFile" android/app/build.gradle
+
       - name: Add fonts
         run: node hooks.mjs fonts
 
@@ -43,11 +72,6 @@ jobs:
         run: |
           command -v convert >/dev/null 2>&1 || sudo apt-get install -y imagemagick
           node hooks.mjs icons
-
-      - name: Use stable signing key
-        run: |
-          mkdir -p ~/.android
-          if [ -f debug.keystore ]; then cp debug.keystore ~/.android/debug.keystore; fi
 
       - name: Build debug APK
         working-directory: android
