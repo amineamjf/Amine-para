@@ -33,8 +33,16 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
-      - name: Sync web files (fonts and icon are added here)
+      - name: Add fonts
+        run: node hooks.mjs fonts
+
+      - name: Sync web files
         run: npx cap sync android
+
+      - name: Make app icon from logo
+        run: |
+          command -v convert >/dev/null 2>&1 || sudo apt-get install -y imagemagick
+          node hooks.mjs icons
 
       - name: Use stable signing key
         run: |
